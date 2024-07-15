@@ -1,7 +1,8 @@
-import numpy
-import streamlit as st
-from matplotlib import pyplot as plt
+"""This script creates a webapp with streamlit that uses umap to plot a random dataset."""
 from threading import _RLock
+from matplotlib import pyplot as plt
+from numpy.random import rand
+import streamlit as st
 from umap import umap_
 
 
@@ -14,21 +15,21 @@ def main():
     """
     st.header("UMAP plot")
     st.write(menssage)
-    data = numpy.random.rand(100, 10)
+    data = rand(100, 10)
     reducer = umap_.UMAP()
     embedding = reducer.fit_transform(data)
     with _RLock() as _:
-        fig, ax = plt.subplots()
-        ax.set_title("UMAP plot")
-        ax.scatter(embedding[:, 0], embedding[:, 1])
-        st.pyplot(fig)
+        figure, axes = plt.subplots()
+        axes.set_title("UMAP plot")
+        axes.scatter(embedding[:, 0], embedding[:, 1])
+        st.pyplot(figure)
     st.write("Codigo de esta webapp:")
     st.code(to_string())
-        
-        
+
+
 def to_string():
     """This function returns the code of the main function as a string."""
-    with open("main.py", "r") as file:
+    with open(file="main.py", mode="r", encoding='utf-8') as file:
         return file.read()
 
 
